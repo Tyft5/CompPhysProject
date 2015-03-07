@@ -1,3 +1,33 @@
 Hello, Colin.
 
 So there's a little of a hurdle to get used to working with this but I think it'll be worth it once the code starts getting more complicated.
+
+-------------------------------------------
+
+Vocabulary:
+
+repository: The project. Holds all the files we're working on
+
+master: The primary branch. Contains the most up-to-date master files. The official copy.
+
+branch: A copy of another branch, usually the master. This is where you can edit files without changing the master until you're good and ready. It'll probably be best to name the branches based on the changes you're planning on making i.e. open branch for feature, implement feature, merge branch. GitHub also keeps a changelog in case something goes catastrophically wrong.
+
+fetch/pull: Copying files in the master into a branch. Keeps the branch files up to date. The github app does this automatically when you merge.
+
+merge/push: Updates files in the master with your changes. If you're unsure what all you've done, GitHub has a compare feature that will show you everywhere the files are different.
+
+-------------------------------------------
+
+Here's how to get going:
+
+1. Google 'github app' and download GitHub for Windows. It's way, way easier than running everything from the command line. Fortunately, the app also includes the command line stuff so you don't have to install that separately.
+
+2. Go to our repository page on the github site. In the bottom right corner, click 'Clone in Desktop'. This should open the github app. You may have to do some account configuration, if so it'd be easiest to do stuff via https. I'm not sure if you'll have to do that stuff though.
+
+3. Once the github app is open, you can select where you want to save the repository, and get started. You can look at, edit, and create branches in the app, as well as update your branch from the master (fetch/pull) and sync your changes with the master (push/merge).
+
+There's tons of stuff I don't know about this, I've just started it, so questions will probably be easiest in person.
+
+COMMENT YOUR CODE
+
+Also, it goes without saying, make sure your code works before merging. If you're having trouble with something, ask me about it and we can both work on the branch (I'll do the same).
