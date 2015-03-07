@@ -30,7 +30,7 @@ There's tons of stuff I don't know about this, I've just started it, so question
 
 You edit files in the folder with the repository just like you normally would. You just have to commit and sync your changes.
 
-Please don't commit or sync .class files. Just uncheck them in the app. They make stuff messy.
+You can compile and everything in the repo folder. I set it to ignore .class files to keep stuff clean.
 
 COMMENT YOUR CODE
 
