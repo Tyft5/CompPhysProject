@@ -30,4 +30,6 @@ There's tons of stuff I don't know about this, I've just started it, so question
 
 COMMENT YOUR CODE
 
+In the same vein, you'll notice in the GitHub app in the bottom left corner you can give your changes a title and comments. Please at least title these in some way indicative of the changes.
+
 Also, it goes without saying, make sure your code works before merging. If you're having trouble with something, ask me about it and we can both work on the branch (I'll do the same).
