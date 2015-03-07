@@ -1,0 +1,3 @@
+Hello, Colin.
+
+So there's a little of a hurdle to get used to working with this but I think it'll be worth it once the code starts getting more complicated.
