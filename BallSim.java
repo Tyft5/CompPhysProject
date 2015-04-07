@@ -65,10 +65,23 @@ public class BallSim {
             pos += radius;
         }
     }
+	
+	//So here's code to test for a collision
+	public static void cCheck(Ball ball1, Ball ball2){
+		//Create a variable I'll set as 0, but the code will change to 1 if there is a collision, thus when this is run we can do, if bool=1, collision, if bool=0, skip.
+		//I made it a public int as this means it will be available throughout the code not just this method, correct?
+		public int checker=0;
+		if ((ball1.pos+ball1.radius)>=(ball2.pos-ball2.radius)){
+			checker=1;
+		}
+		else{
+			checker=0;
+		}
+	}
 	public static void collision(Ball ball1, Ball ball2){
 		//first we'll define the initial values to use in calculations so that we can modify values without a problem
 		double vel1i=ball1.vel;
-		double vel2i-ball2.vel;
+		double vel2i=ball2.vel;
 		//I'm going to use some intermediate values for readability's sake. denom=denominator and such
 		double denom =2*(ball2.mass+(ball1.mass*ball2.mass));
 		double radicate =Math.pow((-2*ball2.mass*(ball1.mass*vel1i-ball2.mass*vel2i)),2)-(4*(ball2.mass+ball1.mass*ball2.mass)*(Math.pow((ball1.mass*vel1i),2)+ball1.mass*ball2.mass*Math.pow(vel2i,2)-Math.pow(ball1.mass*vel1i+ball2.mass*vel2i,2));
