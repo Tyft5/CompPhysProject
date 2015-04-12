@@ -67,32 +67,37 @@ public class BallSim {
     }
 	
 	//So here's code to test for a collision
-	public static void cCheck(Ball ball1, Ball ball2){
+	public static boolean cCheck(Ball ball1, Ball ball2) {
 		//Create a variable I'll set as 0, but the code will change to 1 if there is a collision, thus when this is run we can do, if bool=1, collision, if bool=0, skip.
 		//I made it a public int as this means it will be available throughout the code not just this method, correct?
-		public int checker=0;
-		if ((ball1.pos+ball1.radius)>=(ball2.pos-ball2.radius)){
-			checker=1;
+		if ((ball1.pos + ball1.radius) >= (ball2.pos - ball2.radius)) {
+			return true;
 		}
-		else{
-			checker=0;
+		else {
+			return false;
 		}
 	}
-	public static void collision(Ball ball1, Ball ball2){
+	public static void collision(Ball ball1, Ball ball2) {
 		//first we'll define the initial values to use in calculations so that we can modify values without a problem
-		double vel1i=ball1.vel;
-		double vel2i=ball2.vel;
+		double vel1i = ball1.vel;
+		double vel2i = ball2.vel;
 
 		//I'm going to use some intermediate values for readability's sake. denom=denominator and such
-		double denom = 2 * (ball2.mass+(ball1.mass * ball2.mass));
-		double radicate = Math.pow((-2*ball2.mass * (ball1.mass*vel1i-ball2.mass*vel2i)),2)-(4*(ball2.mass+ball1.mass*ball2.mass)
-            *(Math.pow((ball1.mass*vel1i),2)+ball1.mass*ball2.mass*Math.pow(vel2i,2)-Math.pow(ball1.mass*vel1i+ball2.mass*vel2i,2));
-		double ratitatta = 2*ball2.mass*(ball1.mass*vel1i-ball2.mass*vel2i);
+		double denom = 2 * (ball2.mass + (ball1.mass * ball2.mass));
+		double radicate = Math.pow((-2 * ball2.mass * (ball1.mass*vel1i - ball2.mass*vel2i)),2) - (4*(ball2.mass + ball1.mass*ball2.mass)
+            *(Math.pow((ball1.mass*vel1i),2) + ball1.mass*ball2.mass*Math.pow(vel2i,2) - Math.pow(ball1.mass*vel1i + ball2.mass*vel2i,2));
+		double ratitatta = 2*ball2.mass*(ball1.mass*vel1i - ball2.mass*vel2i)); //<-- added a parenthese b/c it was missing one. double to check to see where it actually goes
         
-		ball2.vel = (ratitatta-Math.sqrt(radicate))/denom;
-		ball1.vel = (ball1.mass*vel1i+ball2.mass*vel2i-balls.mass*ball2.vel)/ball1.mass
+		ball2.vel = (ratitatta - Math.sqrt(radicate)) / denom;
+		ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - balls.mass*ball2.vel) / ball1.mass;
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
+
+    public static void moveBalls() {
+        for (Ball b: balls) {
+            // physics equations for moving ball b over timestep DT here. GRAV is a positive value fyi
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("*insert testicle joke here*");
