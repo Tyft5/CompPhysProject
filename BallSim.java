@@ -14,7 +14,6 @@ import java.util.ArrayList;
     - How do we want to initialize constants? Terminal input, just typing them in the code, etc? Eventually some sort of input would be nice for testing different parameters.
 
     TO DO
-    - Method to move balls. Maybe multiple with different conditions for different end goals (height, speed, etc)?
     - Method to calculate energy(s)
     - User interface
     - Develop consistent theory of quantum love
@@ -43,11 +42,12 @@ public class BallSim {
         // final static double RADIUSDIFF;    // the difference in radius between consecutive balls ~~meters~~
         // final static double INITVEL;       // initial velocity of the balls, if we want one ~~m/s~~
 
-    final static double GRAV = 9.8;    // NOTE: GRAVITY ACC IS POSITIVE ~~m/s^2~~
     final static double DT =   0.01;   // ~~seconds~~
 
     static double t = 0; // ~~seconds~~
     static ArrayList<Ball> balls = new ArrayList<Ball>(NUMBALLS); // the list of balls
+    static double bigG = 6.67384 * Math.pow(10,-11);
+    static double earthM = 5.9721 * Math.pow(10,24);
 
     public static void populateBalls() {
         // Create the balls and populate the arraylist
@@ -69,12 +69,11 @@ public class BallSim {
 	//Method for the motion of each ball. Should be relatively easily. 
 	public static void ballMotion(Ball ball1){
 		//First establish the gravitational force on the ball.
-		double EarthM = 5.9721 * Math.pow(10,24);
-		double G = 6.67384 * Math.pow(10,-11);
-		double GForrce = (G * EarthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
-		double accel = -GForce/ball1.mass;
+		double gForce = (bigG * EarthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
+		double accel = -gForce/ball1.mass;
 		ball1.vel = ball1.vel + (accel * DT);
 		ball1.pos = ball1.pos + (ball1.vel * DT);
+        t += DT;
 	}
 	
 	//So here's code to test for a collision
@@ -88,6 +87,7 @@ public class BallSim {
 			return false;
 		}
 	}
+
 	public static void collision(Ball ball1, Ball ball2) {
 		//first we'll define the initial values to use in calculations so that we can modify values without a problem
 		double vel1i = ball1.vel;
@@ -104,12 +104,30 @@ public class BallSim {
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
 
-	
-
     public static void main(String[] args) {
         System.out.println("*insert testicle joke here*");
 
         populateBalls(); // Creates all the balls w/ their info
+
+        boolean run = true;
+
+        while (run) {
+            // move them
+            for (Ball b: balls) {
+                ballMotion(b);
+            }
+
+            // if needed, do collisions
+            for (int i = 0; i < balls.size()-1; i++) {
+                if ( cCheck(balls.get(i), balls.get(i + 1)) ) {
+                    collision(balls.get(i), balls.get(i + 1));
+                }
+            }
+
+            if (balls.get(balls.size()-1).vel == 0) {
+                run = false;
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +136,7 @@ public class BallSim {
     /*
     Class that represents Ball objects. The variables can be accessed directly by BallSim by calling:
         <ballName>.<variable>
-        e.g. ball2.velocity
+        e.g. ball2.vel
     */
 
     private class Ball {
