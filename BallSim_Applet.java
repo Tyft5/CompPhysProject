@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.applet.*;
 import java.awt.*;
@@ -50,17 +49,20 @@ public class BallSim_Applet extends Applet implements ActionListener {
         // double RADIUSDIFF;    // the difference in radius between consecutive balls ~~meters~~
         // double INITVEL;       // initial velocity of the balls, if we want one ~~m/s~~
 
-    final double GRAV = 9.8;    // NOTE: GRAVITY ACC IS POSITIVE ~~m/s^2~~
     final double DT =   0.01;   // ~~seconds~~
 
     double t = 0; // ~~seconds~~
     ArrayList<Ball> balls = new ArrayList<Ball>(NUMBALLS); // the list of balls
+    double bigG = 6.67384 * Math.pow(10,-11);
+    double earthM = 5.9721 * Math.pow(10,24);
 
     Button start, resetDefault, goToSpace, blowUpMoon, escapeSolarSystem;
     TextField numBallsText, separationText, initHeightText, largestMassText, massDiffText, largestRadText, radDiffText, initVelText;
     TextField maxHeightText, maxEnergyText, maxSpeedText;
 
     public void init() {
+
+        // create balls
         populateBalls();
 
         // set up buttons, text boxes, etc.
@@ -236,6 +238,7 @@ public class BallSim_Applet extends Applet implements ActionListener {
 			return false;
 		}
 	}
+    
 	public void collision(Ball ball1, Ball ball2) {
 		//first we'll define the initial values to use in calculations so that we can modify values without a problem
 		double vel1i = ball1.vel;
@@ -252,10 +255,14 @@ public class BallSim_Applet extends Applet implements ActionListener {
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
 
-    public void moveBalls() {
-        for (Ball b: balls) {
-            // physics equations for moving ball b over timestep DT here. GRAV is a positive value fyi
-        }
+    //Method for the motion of each ball. Should be relatively easily. 
+    public void ballMotion(Ball ball1){
+        //First establish the gravitational force on the ball.
+        double gForce = (bigG * EarthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
+        double accel = -gForce/ball1.mass;
+        ball1.vel = ball1.vel + (accel * DT);
+        ball1.pos = ball1.pos + (ball1.vel * DT);
+        t += DT;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -270,8 +277,9 @@ public class BallSim_Applet extends Applet implements ActionListener {
     private class Ball {
         double mass;
         double radius;
-        double position;
-        double velocity;
+        double pos;
+        double vel;
+        double eRadius;
 
         // Constructor methods for a ball. Instantiates instance variables.
         public Ball(double position) {
@@ -289,8 +297,9 @@ public class BallSim_Applet extends Applet implements ActionListener {
         public Ball(double position, double mass, double radius, double velocity) {
             this.mass = mass;
             this.radius = radius;
-            this.position = position;
-            this.velocity = velocity;
+            this.pos = position;
+            this.vel = velocity;
+            this.eRadius = this.pos + 6371000;
         }
     }
 }
