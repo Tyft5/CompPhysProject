@@ -66,6 +66,17 @@ public class BallSim {
         }
     }
 	
+	//Method for the motion of each ball. Should be relatively easily. 
+	public static void ballMotion(Ball ball1){
+		//First establish the gravitational force on the ball.
+		double EarthM = 5.9721 * Math.pow(10,24);
+		double G = 6.67384 * Math.pow(10,-11);
+		double GForrce = (G * EarthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
+		double accel = -GForce/ball1.mass;
+		ball1.vel = ball1.vel + (accel * DT);
+		ball1.pos = ball1.pos + (ball1.vel * DT);
+	}
+	
 	//So here's code to test for a collision
 	public static boolean cCheck(Ball ball1, Ball ball2) {
 		//Create a variable I'll set as 0, but the code will change to 1 if there is a collision, thus when this is run we can do, if bool=1, collision, if bool=0, skip.
@@ -93,11 +104,7 @@ public class BallSim {
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
 
-    public static void moveBalls() {
-        for (Ball b: balls) {
-            // physics equations for moving ball b over timestep DT here. GRAV is a positive value fyi
-        }
-    }
+	
 
     public static void main(String[] args) {
         System.out.println("*insert testicle joke here*");
@@ -117,8 +124,9 @@ public class BallSim {
     private class Ball {
         double mass;
         double radius;
-        double position;
-        double velocity;
+        double pos;
+        double vel;
+		double eRadius;
 
         // Constructor methods for a ball. Instantiates instance variables.
         public Ball(double position) {
@@ -136,8 +144,9 @@ public class BallSim {
         public Ball(double position, double mass, double radius, double velocity) {
             this.mass = mass;
             this.radius = radius;
-            this.position = position;
-            this.velocity = velocity;
+            this.pos = position;
+            this.vel = velocity;
+			this.eRadius = this.pos + 6371000;
         }
     }
 }
