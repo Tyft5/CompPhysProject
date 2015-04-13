@@ -69,7 +69,7 @@ public class BallSim {
 	//Method for the motion of each ball. Should be relatively easily. 
 	public static void ballMotion(Ball ball1){
 		//First establish the gravitational force on the ball.
-		double gForce = (bigG * EarthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
+		double gForce = (bigG * earthM * ball1.mass)/(ball1.eRadius * ball1.eRadius);
 		double accel = -gForce/ball1.mass;
 		ball1.vel = ball1.vel + (accel * DT);
 		ball1.pos = ball1.pos + (ball1.vel * DT);
@@ -100,9 +100,17 @@ public class BallSim {
 		double ratitatta = 2*ball2.mass*(ball1.mass*vel1i - ball2.mass*vel2i);
         
 		ball2.vel = (ratitatta - Math.sqrt(radicate)) / denom;
-		ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - balls.mass*ball2.vel) / ball1.mass;
+		ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - ball2.mass*ball2.vel) / ball1.mass;
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
+
+    public static boolean bounceCheck(Ball ball1) {
+        return ball1.pos <= 0.005;
+    }
+
+    public static void bounce(Ball ball1) {
+        ball1.vel = -ball1.vel;
+    }
 	
 	public static void GoalCheck(Ball ball1) {
 		double escapeVel = Math.sqrt((2*bigG*earthM)/ball1.eRadius);
@@ -117,11 +125,20 @@ public class BallSim {
         populateBalls(); // Creates all the balls w/ their info
 
         boolean run = true;
+        System.out.println(NUMBALLS);
+        System.out.println(balls.get(0).pos + ", " + balls.get(1).pos + ", " + balls.get(2).pos);
 
         while (run) {
             // move them
             for (Ball b: balls) {
                 ballMotion(b);
+            }
+
+            // bounce if needed
+            for (Ball b: balls) {
+                if (bounceCheck(b)) {
+                    bounce(b);
+                }
             }
 
             // if needed, do collisions
@@ -131,9 +148,11 @@ public class BallSim {
                 }
             }
 
-            if (balls.get(balls.size()-1).vel == 0) {
+            if (balls.get(balls.size()-1).pos <= 0) {
                 run = false;
             }
+            System.out.println(balls.get(0).pos);
+            // System.out.println(balls.get(balls.size()-1).pos);
         }
     }
 
@@ -146,7 +165,7 @@ public class BallSim {
         e.g. ball2.vel
     */
 
-    private class Ball {
+    private static class Ball {
         double mass;
         double radius;
         double pos;
