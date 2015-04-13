@@ -96,12 +96,19 @@ public class BallSim {
 		//I'm going to use some intermediate values for readability's sake. denom=denominator and such
 		double denom = 2 * (ball2.mass + (ball1.mass * ball2.mass));
 		double radicate = Math.pow((-2 * ball2.mass * (ball1.mass*vel1i - ball2.mass*vel2i)),2) - (4*(ball2.mass + ball1.mass*ball2.mass)
-            *(Math.pow((ball1.mass*vel1i),2) + ball1.mass*ball2.mass*Math.pow(vel2i,2) - Math.pow(ball1.mass*vel1i + ball2.mass*vel2i,2));
-		double ratitatta = 2*ball2.mass*(ball1.mass*vel1i - ball2.mass*vel2i)); //<-- added a parenthese b/c it was missing one. double to check to see where it actually goes
+            *(Math.pow((ball1.mass*vel1i),2) + ball1.mass*ball2.mass*Math.pow(vel2i,2) - Math.pow(ball1.mass*vel1i + ball2.mass*vel2i,2)));
+		double ratitatta = 2*ball2.mass*(ball1.mass*vel1i - ball2.mass*vel2i);
         
 		ball2.vel = (ratitatta - Math.sqrt(radicate)) / denom;
 		ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - balls.mass*ball2.vel) / ball1.mass;
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
+	}
+	
+	public static void GoalCheck(Ball ball1) {
+		double escapeVel = Math.sqrt((2*bigG*earthM)/ball1.eRadius);
+		if (ball1.vel>=escapeVel){
+			System.out.println("You escaped Mother Fucker.");
+		}
 	}
 
     public static void main(String[] args) {
