@@ -104,13 +104,6 @@ public class BallSim {
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
 	}
 
-	public static void GoalCheck(Ball ball1) {
-		double escapeVel = Math.sqrt((2*bigG*earthM)/ball1.eRadius);
-		if (ball1.vel>=escapeVel){
-			System.out.println("You escaped Mother Fucker.");
-		}
-	}
-
     public static void main(String[] args) {
         System.out.println("*insert testicle joke here*");
 
