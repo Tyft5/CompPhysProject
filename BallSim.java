@@ -102,6 +102,10 @@ public class BallSim {
 		ball2.vel = (ratitatta - Math.sqrt(radicate)) / denom;
 		ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - ball2.mass*ball2.vel) / ball1.mass;
 		//I haven't run it to check for errors, and there's still a 5% chance this is wrong (I'll explain in person if you want), but I think this'll be a good collision code.
+
+        //Ok so here's my next attempt, I've tested the math a couple of times. It should work now.
+        ball2.vel = (2*ball1.mass*vel1i-vel2i*(ball2.mass-ball1.mass))/(ball1.mass+ball2.mass);
+        ball1.vel = (ball1.mass*vel1i + ball2.mass*vel2i - balls.mass*ball2.vel) / ball1.mass;
 	}
 
     public static boolean bounceCheck(Ball ball1) {
